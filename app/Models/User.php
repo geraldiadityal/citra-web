@@ -27,6 +27,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'roles',
+        'phone_number',
+        'company_number',
     ];
 
     /**
@@ -58,4 +61,17 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public function partners()
+    {
+        return $this->hasMany(CitraPartner::class, 'users_id', 'id');
+    }
+    public function clients()
+    {
+        return $this->hasMany(CitraClient::class, 'users_id', 'id');
+    }
+    public function chats()
+    {
+        return $this->hasMany(RoomChat::class, 'users_id', 'id');
+    }
 }
