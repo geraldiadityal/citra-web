@@ -29,7 +29,7 @@ class User extends Authenticatable
         'password',
         'roles',
         'phone_number',
-        'company_number',
+        'company_name',
     ];
 
     /**

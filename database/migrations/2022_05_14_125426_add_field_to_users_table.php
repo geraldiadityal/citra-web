@@ -14,10 +14,10 @@ class AddFieldToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            
-            $table->string('roles')->after('email')->default('USER');
-            $table->string('phone_number')->after('email')->nullable();
-            $table->string('company_name')->after('email')->nullable();
+
+            $table->string('roles', 5)->after('email')->default('USER');
+            $table->string('phone_number', 16)->after('email')->nullable();
+            $table->string('company_name', 128)->after('email')->nullable();
         });
     }
 

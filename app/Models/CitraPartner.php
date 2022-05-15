@@ -19,4 +19,12 @@ class CitraPartner extends Model
     {
         return $this->hasMany(RoomChat::class, 'partners_id', 'id');
     }
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'users_id', 'id');
+    }
+    public function service()
+    {
+        return $this->belongsTo(CitraService::class, 'services_id', 'id');
+    }
 }
