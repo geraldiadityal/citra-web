@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//Data-data
+//Data'Citra
 Route::get('clients', [CitraClientController::class, 'all']);
 Route::get('partners', [CitraPartnerController::class, 'all']);
 Route::get('services', [CitraServiceController::class, 'all']);

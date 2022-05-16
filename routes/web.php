@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -12,17 +13,22 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+//Homepage
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('dashboard');
+    // return view('auth.login');
 });
 
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified'
-])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
-});
+//
+// Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
+//     Route::name('dashboard.')->prefix('dashboard')->group(function () {
+//         Route::get('/', [DashboardController::class, 'index'])->name('index');
+//     });
+// });
+
+// Dashboard
+Route::prefix('dashboard')
+    ->middleware(['auth:sanctum', 'admin'])
+    ->group(function () {
+        Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+    });
