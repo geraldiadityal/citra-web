@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\CitraClientController;
+use App\Http\Controllers\CitraPartnerController;
+use App\Http\Controllers\CitraServiceController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
@@ -13,22 +16,23 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-//Homepage
+
+
+
+
 Route::get('/', function () {
-    return redirect()->route('dashboard');
-    // return view('auth.login');
+    return view('auth.login');
 });
 
-//
-// Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
-//     Route::name('dashboard.')->prefix('dashboard')->group(function () {
-//         Route::get('/', [DashboardController::class, 'index'])->name('index');
-//     });
-// });
 
-// Dashboard
-Route::prefix('dashboard')
-    ->middleware(['auth:sanctum', 'admin'])
-    ->group(function () {
-        Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
+    Route::name('dashboard.')->prefix('dashboard')->group(function () {
+        Route::get('/', [DashboardController::class, 'index'])->name('index');
+
+        Route::middleware(['admin'])->group(function () {
+            Route::resource('service', CitraServiceController::class);
+            Route::resource('partner', CitraPartnerController::class);
+            Route::resource('client', CitraClientController::class);
+        });
     });
+});

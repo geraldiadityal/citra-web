@@ -11,7 +11,7 @@ class CitraService extends Model
     use HasFactory, SoftDeletes;
     protected $table = 'services';
     protected $fillable = [
-        'description',
+        'name',
     ];
 
     public function partners()
