@@ -28,7 +28,7 @@
                             </tr>
                             <tr>
                                 <th class="border px-6 py-4 text-right">Company Name</th>
-                                <td class="border px-6 py-4">{{ $item->email}}</td>
+                                <td class="border px-6 py-4">{{ $item->company_name}}</td>
                             </tr>
                             <tr>
                                 <th class="border px-6 py-4 text-right">Phone Number</th>
