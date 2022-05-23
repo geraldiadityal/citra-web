@@ -16,7 +16,11 @@
                         {{ __('Dashboard') }}
                     </x-jet-nav-link>
                 </div>
-
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-jet-nav-link href="{{ route('dashboard.user.index') }}" :active="request()->routeIs('dashboard.user.index')">
+                        {{ __('User') }}
+                    </x-jet-nav-link>
+                </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-jet-nav-link href="{{ route('dashboard.partner.index') }}" :active="request()->routeIs('dashboard.partner.index')">
                         {{ __('Citra Partner') }}
@@ -30,6 +34,11 @@
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-jet-nav-link href="{{ route('dashboard.service.index') }}" :active="request()->routeIs('dashboard.service.index')">
                         {{ __('Citra Service') }}
+                    </x-jet-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-jet-nav-link href="{{ route('dashboard.room.index') }}" :active="request()->routeIs('dashboard.room.index')">
+                        {{ __('Room Chat') }}
                     </x-jet-nav-link>
                 </div>
             </div>
@@ -156,6 +165,9 @@
                 {{ __('Dashboard') }}
             </x-jet-responsive-nav-link>
 
+            <x-jet-responsive-nav-link href="{{ route('dashboard.user.index') }}" :active="request()->routeIs('dashboard.user.index')">
+                {{ __('User') }}
+            </x-jet-responsive-nav-link>
             <x-jet-responsive-nav-link href="{{ route('dashboard.partner.index') }}" :active="request()->routeIs('dashboard.partner.index')">
                 {{ __('Citra Partner') }}
             </x-jet-responsive-nav-link>
@@ -166,6 +178,9 @@
 
             <x-jet-responsive-nav-link href="{{ route('dashboard.service.index') }}" :active="request()->routeIs('dashboard.service.index')">
                 {{ __('Citra Service') }}
+            </x-jet-responsive-nav-link>
+            <x-jet-responsive-nav-link href="{{ route('dashboard.room.index') }}" :active="request()->routeIs('dashboard.room.index')">
+                {{ __('Room') }}
             </x-jet-responsive-nav-link>
         </div>
 

@@ -17,7 +17,7 @@ class CreateRoomChatsTable extends Migration
             $table->id();
             $table->bigInteger('users_id');
             $table->bigInteger('partners_id');
-            $table->string('status',4);
+            $table->string('status', 6);
 
             $table->softDeletes();
             $table->timestamps();

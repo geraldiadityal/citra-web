@@ -1,7 +1,7 @@
 <div class="bg-gray-200 bg-opacity-25 grid grid-cols-1 md:grid-cols-1 justify-items-center">
     <div class="p-4">
         <div class="flex items-center ">
-            <div class="ml-4 text-3xl text-gray-600 leading-7 font-semibold"><a href="dashboard/users">Users</a></div>
+            <div class="ml-4 text-3xl text-gray-600 leading-7 font-semibold"><a href="dashboard/user">Users</a></div>
         </div>
     </div>
 </div>
@@ -35,7 +35,7 @@
     <div class="p-6 border-t border-gray-200 md:border-l">
         <div class="flex items-center">
 
-            <div class="ml-4 text-lg text-gray-600 leading-7 font-semibold"><a href="#">Room Chats</a></div>
+            <div class="ml-4 text-lg text-gray-600 leading-7 font-semibold"><a href="dashboard/room">Room Chats</a></div>
         </div>
 
 

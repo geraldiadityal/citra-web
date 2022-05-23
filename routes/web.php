@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\CitraClientController;
 use App\Http\Controllers\CitraPartnerController;
 use App\Http\Controllers\CitraServiceController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\RoomChatController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,6 +23,7 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', function () {
+
     return view('auth.login');
 });
 
@@ -33,6 +36,9 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
             Route::resource('service', CitraServiceController::class);
             Route::resource('partner', CitraPartnerController::class);
             Route::resource('client', CitraClientController::class);
+            Route::resource('room', RoomChatController::class);
+
+            Route::resource('user', UserController::class);
         });
     });
 });

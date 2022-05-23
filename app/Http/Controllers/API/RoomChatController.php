@@ -28,7 +28,7 @@ class RoomChatController extends Controller
             }
         }
 
-        $chats = RoomChat::with(['user', 'partner']);
+        $chats = RoomChat::with(['user', 'partner',]);
 
         if ($users_id) {
             $chats->where('users_id', $users_id);
