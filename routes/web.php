@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\MidtransController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CitraClientController;
 use App\Http\Controllers\CitraPartnerController;
@@ -25,6 +26,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('auth.login');
 });
+
+//midtrans related
+Route::get('midtrans/success', [MidtransController::class, 'success']);
+Route::get('midtrans/unfinish', [MidtransController::class, 'unfinish']);
+Route::get('midtrans/error', [MidtransController::class, 'error']);
 
 
 Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {

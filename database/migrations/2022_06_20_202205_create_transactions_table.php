@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCitraPartnersTable extends Migration
+class CreateTransactionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,16 @@ class CreateCitraPartnersTable extends Migration
      */
     public function up()
     {
-        Schema::create('citra_partners', function (Blueprint $table) {
+        Schema::create('transactions', function (Blueprint $table) {
             $table->id();
 
-            $table->bigInteger('users_id');
-            $table->bigInteger('services_id');
-            $table->integer('price');
+            $table->bigInteger('room_id');
+            $table->bigInteger('user_id');
+            $table->integer('total');
+            $table->string('status', 6);
+            $table->text('payment_url');
+
+
             $table->softDeletes();
             $table->timestamps();
         });
@@ -31,6 +35,6 @@ class CreateCitraPartnersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('citra_partners');
+        Schema::dropIfExists('transactions');
     }
 }

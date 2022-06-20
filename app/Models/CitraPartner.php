@@ -13,6 +13,7 @@ class CitraPartner extends Model
     protected $fillable = [
         'users_id',
         'services_id',
+        'price',
     ];
 
     public function chats()

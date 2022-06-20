@@ -27,6 +27,10 @@
                         width: '25%'
                     },
                     {
+                        data: 'price',
+                        name: 'price',
+                        width: '5%'
+                    }, {
                         data: "action",
                         name: "action",
                         orderable: "false",
@@ -53,6 +57,7 @@
                                 <th>ID</th>
                                 <th>Nama Konsultan</th>
                                 <th>Service</th>
+                                <th>Price</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
