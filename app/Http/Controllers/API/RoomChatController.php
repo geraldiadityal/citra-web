@@ -42,4 +42,25 @@ class RoomChatController extends Controller
 
         return ResponseFormatter::success($chats->paginate($limit), 'Data partner berhasil diambil');
     }
+
+    public function create(Request $request)
+    {
+        $request->validate([
+            'partners_id' => 'required|exists:citra_partners,id',
+            'users_id' => 'required|exists:users,id',
+            'status' => 'required',
+        ]);
+
+        $room = RoomChat::create([
+            'partners_id' => $request->partners_id,
+            'users_id' => $request->users_id,
+            'status' => $request->status,
+        ]);
+
+        $room = RoomChat::with(['user', 'partner'])->find($room->id);
+
+        return ResponseFormatter::success([
+            'room' => $room
+        ], 'Room berhasil dibuat');
+    }
 }

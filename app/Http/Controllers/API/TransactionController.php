@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Helpers\ResponseFormatter;
 use App\Http\Controllers\Controller;
+use App\Models\RoomChat;
 use App\Models\Transaction;
 use Exception;
 use Illuminate\Http\Request;
@@ -33,7 +34,7 @@ class TransactionController extends Controller
             }
         }
 
-        $transaction = Transaction::with(['chats', 'user',])->where('user_id', Auth::user()->id);
+        $transaction = Transaction::with(['room', 'user',])->where('user_id', Auth::user()->id);
 
 
         if ($room_id) {
@@ -59,19 +60,29 @@ class TransactionController extends Controller
     {
 
         $request->validate([
-            'room_id' => 'required|exists:room_chats,id',
+            // 'room_id' => 'required|exists:room_chats,id',
+            'partners_id' => 'required|exists:citra_partners,id',
             'user_id' => 'required|exists:users,id',
             'status' => 'required',
             'total' => 'required',
         ]);
 
+        //create room
+        $room = RoomChat::create([
+            'partners_id' => $request->partners_id,
+            'users_id' => $request->user_id,
+            'status' => $request->status,
+        ]);
+
+        //create transaksi
         $transaction = Transaction::create([
-            'room_id' => $request->room_id,
+            'room_id' => $room->id,
             'user_id' => $request->user_id,
             'status' => $request->status,
             'total' => $request->total,
             'payment_url' => '',
         ]);
+
 
         //Konfigurasi Midtrans
         Config::$serverKey = config('services.midtrans.serverKey');
