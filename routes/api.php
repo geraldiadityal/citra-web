@@ -26,7 +26,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('clients', [CitraClientController::class, 'all']);
 Route::get('partners', [CitraPartnerController::class, 'all']);
 Route::get('services', [CitraServiceController::class, 'all']);
-Route::get('room_chat', [RoomChatController::class, 'all']);
 Route::get('question', [QuestionServiceController::class, 'all']);
 
 
@@ -34,15 +33,19 @@ Route::get('question', [QuestionServiceController::class, 'all']);
 Route::post('register', [UserController::class, 'register']);
 Route::post('login', [UserController::class, 'login']);
 
-
+//Midtrans
 Route::post('midtrans/callback', [MidtransController::class, 'callback']);
 
+
+//for use need token
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('user', [UserController::class, 'fetch']);
     Route::post('user', [UserController::class, 'updateProfile']);
     Route::post('logout', [UserController::class, 'logout']);
 
+    Route::get('room_chat', [RoomChatController::class, 'all']);
     Route::post('room', [RoomChatController::class, 'create']);
+
     Route::get('transaction', [TransactionController::class, 'all']);
     Route::post('transaction/{id}', [TransactionController::class, 'update']);
 

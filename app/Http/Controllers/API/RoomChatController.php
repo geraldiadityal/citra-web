@@ -6,6 +6,7 @@ use App\Helpers\ResponseFormatter;
 use App\Http\Controllers\Controller;
 use App\Models\RoomChat;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class RoomChatController extends Controller
 {
@@ -28,7 +29,7 @@ class RoomChatController extends Controller
             }
         }
 
-        $chats = RoomChat::with(['user', 'partner',]);
+        $chats = RoomChat::with(['user', 'partner',])->where('users_id', Auth::user()->id);
 
         if ($users_id) {
             $chats->where('users_id', $users_id);
