@@ -29,7 +29,8 @@ class MidtransController extends Controller
 
         //search transaksi by ID
         $transaction = Transaction::findOrFail($order_id);
-        $room = RoomChat::findOrFail($transaction->room_id);
+
+        // $room = RoomChat::findOrFail($transaction->room_id);
 
         //handle notifikasi status
         if ($status == 'capture') {
@@ -42,7 +43,6 @@ class MidtransController extends Controller
             }
         } else if ($status == 'settlement') {
             $transaction->status = 'SUCCESS';
-            $room->status = 'PAID';
         } else if ($status == 'pending') {
             $transaction->status = 'PENDING';
         } else if ($status == 'deny') {
@@ -55,8 +55,8 @@ class MidtransController extends Controller
 
         //save transaksi
         $transaction->save();
-        //save status room
-        $room->save();
+        // unused save status room
+        // $room->save();
     }
 
     public function success()

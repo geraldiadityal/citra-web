@@ -12,13 +12,15 @@ class Transaction extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'room_id', 'user_id', 'total', 'status', 'payment_url'
+        'partner_id', 'user_id', 'total', 'status', 'payment_url'
     ];
 
-    public function room()
+    public function partner()
     {
-        return $this->hasOne(RoomChat::class, 'id', 'room_id');
+
+        return $this->hasOne(CitraPartner::class, 'id', 'partner_id');
     }
+
     public function user()
     {
         return $this->hasOne(User::class, 'id', 'user_id');

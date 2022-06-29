@@ -16,8 +16,9 @@ class CreateTransactionsTable extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
 
-            $table->bigInteger('room_id');
+            $table->bigInteger('partner_id');
             $table->bigInteger('user_id');
+
             $table->integer('total');
             $table->string('status', 6);
             $table->text('payment_url');

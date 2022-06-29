@@ -41,7 +41,7 @@ class RoomChatController extends Controller
             $chats->where('status', 'like', '%' . $status . '%');
         }
 
-        return ResponseFormatter::success($chats->paginate($limit), 'Data partner berhasil diambil');
+        return ResponseFormatter::success($chats->paginate($limit), 'Data chats berhasil diambil');
     }
 
     public function create(Request $request)

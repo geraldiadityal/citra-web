@@ -19,13 +19,13 @@ class TransactionController extends Controller
         $id = $request->input('id');
         $limit = $request->input('limit');
 
-        $users_id = $request->input('user_id');
-        $room_id = $request->input('room_id');
+        $user_id = $request->input('user_id');
+        $partner_id = $request->input('partner_id');
         $status = $request->input('status');
         $paymentUrl = $request->input('payment_url');
 
         if ($id) {
-            $transaction = Transaction::with(['room', 'user',])->find($id);
+            $transaction = Transaction::with(['partner', 'user',])->find($id);
 
             if ($transaction) {
                 return ResponseFormatter::success($transaction, 'Data transaksi berhasil diambil');
@@ -34,11 +34,11 @@ class TransactionController extends Controller
             }
         }
 
-        $transaction = Transaction::with(['room', 'user',])->where('user_id', Auth::user()->id);
+        $transaction = Transaction::with(['partner', 'user',])->where('user_id', Auth::user()->id);
 
 
-        if ($room_id) {
-            $transaction->where('room_id', $room_id);
+        if ($partner_id) {
+            $transaction->where('partner_id', $partner_id);
         }
         if ($status) {
             $transaction->where('status', $status);
@@ -60,23 +60,16 @@ class TransactionController extends Controller
     {
 
         $request->validate([
-            // 'room_id' => 'required|exists:room_chats,id',
-            'partners_id' => 'required|exists:citra_partners,id',
+            'partner_id' => 'required|exists:citra_partners,id',
             'user_id' => 'required|exists:users,id',
             'status' => 'required',
             'total' => 'required',
         ]);
 
-        //create room
-        $room = RoomChat::create([
-            'partners_id' => $request->partners_id,
-            'users_id' => $request->user_id,
-            'status' => $request->status,
-        ]);
 
         //create transaksi
         $transaction = Transaction::create([
-            'room_id' => $room->id,
+            'partner_id' => $request->partner_id,
             'user_id' => $request->user_id,
             'status' => $request->status,
             'total' => $request->total,
@@ -91,7 +84,7 @@ class TransactionController extends Controller
         Config::$is3ds = config('services.midtrans.is3ds');
 
         //Call transaksi yang dibuat
-        $transaction = Transaction::with(['room', 'user'])->find($transaction->id);
+        $transaction = Transaction::with(['partner', 'user'])->find($transaction->id);
 
         //Create Transaksi Midtrans
         $midtrans = [
