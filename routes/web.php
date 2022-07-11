@@ -41,7 +41,6 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
             Route::resource('service', CitraServiceController::class);
             Route::resource('partner', CitraPartnerController::class);
             Route::resource('client', CitraClientController::class);
-            Route::resource('room', RoomChatController::class);
 
             Route::resource('user', UserController::class);
         });

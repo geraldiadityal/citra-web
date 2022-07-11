@@ -18,7 +18,7 @@ class CitraPartnerController extends Controller
     public function index()
     {
         if (request()->ajax()) {
-            $query = CitraPartner::with(['chats', 'user', 'service']);
+            $query = CitraPartner::with(['user', 'service']);
 
             return DataTables::of($query)
                 ->addColumn('action', function ($item) {

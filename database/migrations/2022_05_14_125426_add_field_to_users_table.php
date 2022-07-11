@@ -18,7 +18,7 @@ class AddFieldToUsersTable extends Migration
             $table->string('email', 80)->change();
             $table->string('password', 64)->change();
             $table->string('profile_photo_path', 100)->change();
-            $table->string('roles', 5)->after('email')->default('USER');
+            $table->string('roles', 7)->after('email')->default('USER');
             $table->string('phone_number', 16)->after('email')->nullable();
             $table->string('company_name', 64)->after('email')->nullable();
         });

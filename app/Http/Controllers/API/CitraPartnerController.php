@@ -27,7 +27,7 @@ class CitraPartnerController extends Controller
             }
         }
 
-        $partner = CitraPartner::with(['chats', 'user', 'service']);
+        $partner = CitraPartner::with(['user', 'service']);
 
         if ($users_id) {
             $partner->where('users_id', $users_id);

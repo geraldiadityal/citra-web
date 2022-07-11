@@ -36,11 +36,7 @@
                         {{ __('Citra Service') }}
                     </x-jet-nav-link>
                 </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-jet-nav-link href="{{ route('dashboard.room.index') }}" :active="request()->routeIs('dashboard.room.index')">
-                        {{ __('Room Chat') }}
-                    </x-jet-nav-link>
-                </div>
+
             </div>
 
             <div class="hidden sm:flex sm:items-center sm:ml-6">
@@ -179,9 +175,7 @@
             <x-jet-responsive-nav-link href="{{ route('dashboard.service.index') }}" :active="request()->routeIs('dashboard.service.index')">
                 {{ __('Citra Service') }}
             </x-jet-responsive-nav-link>
-            <x-jet-responsive-nav-link href="{{ route('dashboard.room.index') }}" :active="request()->routeIs('dashboard.room.index')">
-                {{ __('Room') }}
-            </x-jet-responsive-nav-link>
+
         </div>
 
         <!-- Responsive Settings Options -->

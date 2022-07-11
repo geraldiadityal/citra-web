@@ -14,7 +14,7 @@ class CreateServicesTable extends Migration
     public function up()
     {
         Schema::create('services', function (Blueprint $table) {
-            $table->id();
+            $table->tinyIncrements('id');
             $table->string('name', 32);
             $table->softDeletes();
             $table->timestamps();

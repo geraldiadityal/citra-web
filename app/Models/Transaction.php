@@ -12,7 +12,7 @@ class Transaction extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'partner_id', 'user_id', 'total', 'status', 'payment_url'
+        'partner_id', 'user_id', 'session_chat_id', 'total', 'status', 'payment_url'
     ];
 
     public function partner()
@@ -24,6 +24,11 @@ class Transaction extends Model
     public function user()
     {
         return $this->hasOne(User::class, 'id', 'user_id');
+    }
+
+    public function session()
+    {
+        return $this->hasOne(SessionChats::class, 'id', 'session_chat_id');
     }
 
     public function getCreatedAtAttribute($value)

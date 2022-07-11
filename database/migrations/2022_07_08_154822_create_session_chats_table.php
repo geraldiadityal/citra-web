@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTransactionsTable extends Migration
+class CreateSessionChatsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,10 @@ class CreateTransactionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('transactions', function (Blueprint $table) {
+        Schema::create('session_chats', function (Blueprint $table) {
             $table->increments('id');
-
-            $table->unsignedTinyInteger('partner_id');
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedInteger('session_chat_id')->nullable();
-            $table->integer('total');
-            $table->string('status', 8);
-            $table->text('payment_url');
+            $table->unsignedBigInteger('user1_id');
+            $table->unsignedBigInteger('user2_id');
 
 
             $table->softDeletes();
@@ -36,6 +31,6 @@ class CreateTransactionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('transactions');
+        Schema::dropIfExists('session_chats');
     }
 }

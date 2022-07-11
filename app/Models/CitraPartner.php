@@ -16,10 +16,6 @@ class CitraPartner extends Model
         'price',
     ];
 
-    public function chats()
-    {
-        return $this->hasMany(RoomChat::class, 'partners_id', 'id');
-    }
     public function user()
     {
         return $this->belongsTo(User::class, 'users_id', 'id');

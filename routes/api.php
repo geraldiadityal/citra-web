@@ -1,14 +1,17 @@
 <?php
 
+use App\Http\Controllers\API\ChatsController;
 use App\Http\Controllers\API\CitraClientController;
 use App\Http\Controllers\API\CitraPartnerController;
 use App\Http\Controllers\API\CitraServiceController;
 use App\Http\Controllers\API\MidtransController;
 use App\Http\Controllers\API\QuestionServiceController;
 use App\Http\Controllers\API\RoomChatController;
+use App\Http\Controllers\API\SessionChatController;
 use App\Http\Controllers\API\TransactionController;
 use App\Http\Controllers\API\UserController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,19 +25,22 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+
+Broadcast::routes(['middleware' => ['auth:sanctum']]);
+
+//for Midtrans
+Route::post('midtrans/callback', [MidtransController::class, 'callback']);
+
 //Data'Citra
 Route::get('clients', [CitraClientController::class, 'all']);
 Route::get('partners', [CitraPartnerController::class, 'all']);
 Route::get('services', [CitraServiceController::class, 'all']);
 Route::get('question', [QuestionServiceController::class, 'all']);
 
-
-//User
+//Login and Register User
 Route::post('register', [UserController::class, 'register']);
 Route::post('login', [UserController::class, 'login']);
-
-//Midtrans
-Route::post('midtrans/callback', [MidtransController::class, 'callback']);
 
 
 //for use need token
@@ -43,11 +49,16 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('user', [UserController::class, 'updateProfile']);
     Route::post('logout', [UserController::class, 'logout']);
 
-    Route::get('room_chat', [RoomChatController::class, 'all']);
-    Route::post('room', [RoomChatController::class, 'create']);
 
     Route::get('transaction', [TransactionController::class, 'all']);
     Route::post('transaction/{id}', [TransactionController::class, 'update']);
 
     Route::post('checkout', [TransactionController::class, 'checkout']);
+
+    Route::get('session', [SessionChatController::class, 'all']);
+
+
+    //for chat pusher
+    Route::post('send/{sessionChats}', [ChatsController::class, 'send']);
+    Route::get('chats', [ChatsController::class, 'fetch']);
 });

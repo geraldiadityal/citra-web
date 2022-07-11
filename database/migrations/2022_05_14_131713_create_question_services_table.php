@@ -14,10 +14,10 @@ class CreateQuestionServicesTable extends Migration
     public function up()
     {
         Schema::create('question_services', function (Blueprint $table) {
-            $table->id();
-            $table->bigInteger('services_id');
-            $table->longText('question');
-            $table->longText('answer');
+            $table->smallIncrements('id');
+            $table->unsignedTinyInteger('services_id');
+            $table->text('question');
+            $table->text('answer');
 
             $table->softDeletes();
             $table->timestamps();

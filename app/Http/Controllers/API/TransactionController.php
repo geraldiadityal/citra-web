@@ -19,7 +19,6 @@ class TransactionController extends Controller
         $id = $request->input('id');
         $limit = $request->input('limit');
 
-        $user_id = $request->input('user_id');
         $partner_id = $request->input('partner_id');
         $status = $request->input('status');
         $paymentUrl = $request->input('payment_url');
@@ -34,7 +33,7 @@ class TransactionController extends Controller
             }
         }
 
-        $transaction = Transaction::with(['partner', 'user',])->where('user_id', Auth::user()->id);
+        $transaction = Transaction::with(['partner', 'user', 'session'])->where('user_id', Auth::user()->id)->get();
 
 
         if ($partner_id) {
@@ -44,7 +43,7 @@ class TransactionController extends Controller
             $transaction->where('status', $status);
         }
 
-        return ResponseFormatter::success($transaction->paginate($limit), 'Data list transaksi berhasil diambil');
+        return ResponseFormatter::success($transaction, 'Data list transaksi berhasil diambil');
     }
 
     public function update(Request $request, $id)
@@ -85,6 +84,8 @@ class TransactionController extends Controller
 
         //Call transaksi yang dibuat
         $transaction = Transaction::with(['partner', 'user'])->find($transaction->id);
+
+
 
         //Create Transaksi Midtrans
         $midtrans = [

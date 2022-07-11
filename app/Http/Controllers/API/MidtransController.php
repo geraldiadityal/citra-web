@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\CitraPartner;
 use App\Models\RoomChat;
+use App\Models\SessionChats;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Midtrans\Config;
@@ -29,6 +31,9 @@ class MidtransController extends Controller
 
         //search transaksi by ID
         $transaction = Transaction::findOrFail($order_id);
+        $partner = CitraPartner::findOrFail($transaction->partner_id);
+
+
 
         // $room = RoomChat::findOrFail($transaction->room_id);
 
@@ -39,10 +44,24 @@ class MidtransController extends Controller
                     $transaction->status = 'PENDING';
                 } else {
                     $transaction->status = 'SUCCESS';
+
+                    $session = SessionChats::create([
+                        'user1_id' => $transaction->user_id,
+                        'user2_id' => $partner->users_id,
+                    ]);
+
+                    $transaction->session_chat_id = $session->id;
                 }
             }
         } else if ($status == 'settlement') {
             $transaction->status = 'SUCCESS';
+
+            $session = SessionChats::create([
+                'user1_id' => $transaction->user_id,
+                'user2_id' => $partner->users_id,
+            ]);
+
+            $transaction->session_chat_id = $session->id;
         } else if ($status == 'pending') {
             $transaction->status = 'PENDING';
         } else if ($status == 'deny') {

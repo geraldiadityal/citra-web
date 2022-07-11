@@ -71,8 +71,4 @@ class User extends Authenticatable
     {
         return $this->hasMany(CitraClient::class, 'users_id', 'id');
     }
-    public function chats()
-    {
-        return $this->hasMany(RoomChat::class, 'users_id', 'id');
-    }
 }
