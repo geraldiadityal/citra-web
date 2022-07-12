@@ -24,7 +24,7 @@ class TransactionController extends Controller
         $paymentUrl = $request->input('payment_url');
 
         if ($id) {
-            $transaction = Transaction::with(['partner', 'user',])->find($id);
+            $transaction = Transaction::with(['partner', 'user','session'])->find($id);
 
             if ($transaction) {
                 return ResponseFormatter::success($transaction, 'Data transaksi berhasil diambil');
@@ -33,17 +33,17 @@ class TransactionController extends Controller
             }
         }
 
-        $transaction = Transaction::with(['partner', 'user', 'session'])->where('user_id', Auth::user()->id)->get();
+        $transaction = Transaction::with(['partner', 'user', 'session'])->where('user_id', Auth::user()->id);
 
 
         if ($partner_id) {
-            $transaction->where('partner_id', $partner_id);
+           $transaction->where('partner_id', $partner_id);
         }
         if ($status) {
-            $transaction->where('status', $status);
+           $transaction->where('status', $status);
         }
 
-        return ResponseFormatter::success($transaction, 'Data list transaksi berhasil diambil');
+        return ResponseFormatter::success($transaction->get(), 'Data list transaksi berhasil diambil');
     }
 
     public function update(Request $request, $id)
