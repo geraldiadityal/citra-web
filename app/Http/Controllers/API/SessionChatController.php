@@ -13,7 +13,7 @@ class SessionChatController extends Controller
     public function all(Request $request)
     {
         $id = $request->input('id');
-        $user_id = $request->input('user_id');
+
 
         if ($id) {
             $session = SessionChats::with(['chats', 'messages', 'transaction'])->find($id);
@@ -29,7 +29,7 @@ class SessionChatController extends Controller
             return $query->orderBy('id', 'desc')->limit(1);
         }, 'messages' => function ($query) {
             return $query->orderBy('id', 'desc')->limit(1);
-        }, 'transaction'])
+        }, 'transaction', 'user', 'partner'])
             ->where('user1_id', Auth::user()->id)
             ->orWhere('user2_id', Auth::user()->id)->get();
 

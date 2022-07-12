@@ -29,6 +29,15 @@ class SessionChats extends Model
     {
         return $this->belongsTo(Transaction::class, 'id', 'session_chat_id');
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user1_id', 'id');
+    }
+    public function partner()
+    {
+        return $this->belongsTo(User::class, 'user2_id', 'id');
+    }
     public function getCreatedAtAttribute($value)
     {
         return Carbon::parse($value)->timestamp;

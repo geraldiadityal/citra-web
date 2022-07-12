@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Events\PrivateChatEvent;
+use App\Events\SessionChatEvent;
 use App\Helpers\ResponseFormatter;
 use App\Http\Controllers\Controller;
 use App\Models\Chats;
@@ -40,6 +41,7 @@ class ChatsController extends Controller
         $sessionChats->touch();
 
         broadcast(new PrivateChatEvent($message->content, $chat));
+        broadcast(new SessionChatEvent($sessionChats, $message));
 
         return ResponseFormatter::success($chat->session_chat_id, 'Berhasil');
     }
