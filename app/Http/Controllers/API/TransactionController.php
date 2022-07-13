@@ -33,7 +33,7 @@ class TransactionController extends Controller
             }
         }
 
-        $transaction = Transaction::with(['partner', 'user', 'session'])->where('user_id', Auth::user()->id)->get();
+        $transaction = Transaction::with(['partner', 'user', 'session'])->where('user_id', Auth::user()->id);
 
 
         if ($partner_id) {
@@ -43,7 +43,7 @@ class TransactionController extends Controller
             $transaction->where('status', $status);
         }
 
-        return ResponseFormatter::success($transaction, 'Data list transaksi berhasil diambil');
+        return ResponseFormatter::success($transaction->get(), 'Data list transaksi berhasil diambil');
     }
 
     public function update(Request $request, $id)
