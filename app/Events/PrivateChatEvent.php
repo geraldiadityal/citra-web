@@ -24,6 +24,7 @@ class PrivateChatEvent implements ShouldBroadcast
     public $chat;
     public function __construct($content, $chat)
     {
+
         $this->content = $content;
         $this->chat = $chat;
         $this->dontBroadcastToCurrentUser();
