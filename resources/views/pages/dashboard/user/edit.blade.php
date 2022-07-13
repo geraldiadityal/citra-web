@@ -85,6 +85,7 @@
                                 <option disabled>----</option>
                                 <option value="USER">User</option>
                                 <option value="ADMIN">Admin</option>
+                                <option value="PARTNER">Partner</option>
                             </select>
                         </div>
                     </div>

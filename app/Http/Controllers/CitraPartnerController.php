@@ -60,7 +60,10 @@ class CitraPartnerController extends Controller
     {
         $data = $request->all();
 
-        CitraPartner::create($data);
+        $partner = CitraPartner::create($data);
+        $user = User::findOrFail($partner->users_id);
+        $user->roles = "PARTNER";
+        $user->save();
 
         return redirect()->route('dashboard.partner.index')->with('success', 'Citra Partner has been created');
     }
@@ -118,6 +121,9 @@ class CitraPartnerController extends Controller
      */
     public function destroy(CitraPartner $partner)
     {
+        $user = User::findOrFail($partner->users_id);
+        $user->roles = "USER";
+        $user->save();
         $partner->delete();
         return redirect()->route('dashboard.partner.index')->with(
             'success',

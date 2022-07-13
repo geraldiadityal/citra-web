@@ -27,7 +27,7 @@ class UserRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:32'],
             'email' => ['required', 'string', 'max:80'],
-            'roles' => ['required', 'string', 'max:5', 'in:USER,ADMIN'],
+            'roles' => ['required', 'string', 'max:7', 'in:USER,ADMIN,PARTNER'],
 
         ];
     }
