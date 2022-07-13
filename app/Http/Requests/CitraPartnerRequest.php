@@ -27,6 +27,7 @@ class CitraPartnerRequest extends FormRequest
         return [
             'users_id' => 'required|max:20',
             'services_id' => 'required|max:20',
+            'price' => 'required|max:10',
         ];
     }
 }
