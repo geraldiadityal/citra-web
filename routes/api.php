@@ -27,7 +27,7 @@ use Illuminate\Support\Facades\Route;
 
 
 
-Broadcast::routes(['middleware' => ['auth:sanctum']]);
+Broadcast::routes(['middleware' => ['auth:sanctum', 'partner']]);
 
 //for Midtrans
 Route::post('midtrans/callback', [MidtransController::class, 'callback']);
