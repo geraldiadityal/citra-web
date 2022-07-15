@@ -25,7 +25,9 @@ class SessionChatController extends Controller
             }
         }
 
-        $session = SessionChats::with(['chats', 'messages' => function ($query) {
+        $session = SessionChats::with(['chats' => function ($query) {
+            return $query->orderBy('id', 'desc');
+        }, 'messages' => function ($query) {
             return $query->orderBy('id', 'desc');
         }, 'transaction', 'user', 'partner'])
             ->where('user1_id', Auth::user()->id)
