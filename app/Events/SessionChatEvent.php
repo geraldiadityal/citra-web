@@ -37,6 +37,6 @@ class SessionChatEvent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('SessionChat');
+        return new Channel('SessionChat.' . $this->sessions['id']);
     }
 }
