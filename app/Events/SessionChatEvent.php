@@ -19,13 +19,12 @@ class SessionChatEvent implements ShouldBroadcast
      *
      * @return void
      */
-    public $sessions;
-    public $messages;
+    public $user_id;
 
-    public function __construct($sessions, $messages)
+    public function __construct($user_id)
     {
-        $this->sessions = $sessions;
-        $this->messages = $messages;
+        $this->user_id = $user_id;
+
 
         $this->dontBroadcastToCurrentUser();
     }
@@ -37,6 +36,6 @@ class SessionChatEvent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('SessionChat.' . $this->sessions['id']);
+        return new Channel('SessionChat.' . $this->user_id);
     }
 }

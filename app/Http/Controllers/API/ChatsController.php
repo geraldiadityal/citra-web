@@ -35,13 +35,16 @@ class ChatsController extends Controller
         ]);
 
         $chat = $message->createForSender($sessionChats->id, Auth::user()->id);
+        broadcast(new SessionChatEvent(Auth::user()->id));
 
+        //create and broadcast for receiver
         $message->createForReceiver($sessionChats->id, $request->to_user);
+        broadcast(new SessionChatEvent($request->to_user));
 
         $sessionChats->touch();
 
         broadcast(new PrivateChatEvent($message->content, $chat));
-        broadcast(new SessionChatEvent($sessionChats, $message));
+
 
         return ResponseFormatter::success($chat->session_chat_id, 'Berhasil');
     }
