@@ -110,7 +110,7 @@ class TransactionController extends Controller
      */
     public function destroy(Transaction $transaction)
     {
-        $session = SessionChats::findOrFail($transaction->session_chat_id);
+        $session = SessionChats::where('id', $transaction->session_chat_id);
         $chats = Chats::where('session_chat_id', $transaction->session_chat_id);
         $message = Message::where('session_chats_id', $transaction->session_chat_id);
 
