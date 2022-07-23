@@ -7,6 +7,7 @@ use App\Http\Controllers\CitraPartnerController;
 use App\Http\Controllers\CitraServiceController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\RoomChatController;
+use App\Http\Controllers\TransactionController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -41,6 +42,7 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
             Route::resource('service', CitraServiceController::class);
             Route::resource('partner', CitraPartnerController::class);
             Route::resource('client', CitraClientController::class);
+            Route::resource('transaction', TransactionController::class);
 
             Route::resource('user', UserController::class);
         });
