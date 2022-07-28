@@ -15,7 +15,7 @@ class QuestionServiceController extends Controller
         $limit = $request->input('limit');
 
 
-        $services_id = $request->input('service_id');
+        $services_id = $request->input('services_id');
         $question = $request->input('question');
         $answer = $request->input('answer');
 
