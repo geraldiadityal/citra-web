@@ -29,7 +29,7 @@ class NewPasswordController extends Controller
         );
 
         if ($status == Password::RESET_LINK_SENT) {
-            return ResponseFormatter::success($status, 'Forgot Password Berhasil');
+            return ResponseFormatter::success(__($status), 'Forgot Password Berhasil');
         }
         return ResponseFormatter::error([trans($status)], 'Forgot Password Gagal', 404);
     }
