@@ -5,8 +5,9 @@ use App\Http\Controllers\API\CitraClientController;
 use App\Http\Controllers\API\CitraPartnerController;
 use App\Http\Controllers\API\CitraServiceController;
 use App\Http\Controllers\API\MidtransController;
+use App\Http\Controllers\API\NewPasswordController;
 use App\Http\Controllers\API\QuestionServiceController;
-use App\Http\Controllers\API\RoomChatController;
+
 use App\Http\Controllers\API\SessionChatController;
 use App\Http\Controllers\API\TransactionController;
 use App\Http\Controllers\API\UserController;
@@ -41,6 +42,11 @@ Route::get('question', [QuestionServiceController::class, 'all']);
 //Login and Register User
 Route::post('register', [UserController::class, 'register']);
 Route::post('login', [UserController::class, 'login']);
+
+Route::post('forgot-password', [NewPasswordController::class, 'forgotPassword']);
+
+// Route::post('reset-password', [NewPasswordController::class, 'reset']);
+
 
 
 //for use need token

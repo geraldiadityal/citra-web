@@ -6,7 +6,6 @@ use App\Http\Controllers\CitraClientController;
 use App\Http\Controllers\CitraPartnerController;
 use App\Http\Controllers\CitraServiceController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\RoomChatController;
 use App\Http\Controllers\TransactionController;
 use Illuminate\Support\Facades\Route;
 
@@ -32,6 +31,8 @@ Route::get('/', function () {
 Route::get('midtrans/success', [MidtransController::class, 'success']);
 Route::get('midtrans/unfinish', [MidtransController::class, 'unfinish']);
 Route::get('midtrans/error', [MidtransController::class, 'error']);
+
+
 
 
 Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
