@@ -29,13 +29,9 @@ class NewPasswordController extends Controller
         );
 
         if ($status == Password::RESET_LINK_SENT) {
-            return [
-                'status' => __($status)
-            ];
+            return ResponseFormatter::success($status, 'Forgot Password Berhasil');
         }
-        throw ValidationException::withMessages([
-            'email' => [trans($status)],
-        ]);
+        return ResponseFormatter::error([trans($status)], 'Forgot Password Gagal', 404);
     }
 
     public function reset(Request $request)
