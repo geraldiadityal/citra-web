@@ -6,10 +6,11 @@ use App\Helpers\ResponseFormatter;
 use App\Http\Controllers\Controller;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Password;
-use Illuminate\Validation\ValidationException;
+use Exception;
 
 class NewPasswordController extends Controller
 {
@@ -32,6 +33,35 @@ class NewPasswordController extends Controller
             return ResponseFormatter::success(__($status), 'Forgot Password Berhasil');
         }
         return ResponseFormatter::error([trans($status)], 'Forgot Password Gagal', 404);
+    }
+
+    public function changePassword(Request $request)
+    {
+        if (!(Hash::check($request->get('current-password'), Auth::user()->password))) {
+            return ResponseFormatter::error(null, 'Your current password does not matches with the password.');
+        }
+        if (strcmp($request->get('current-password'), $request->get('new-password')) == 0) {
+            return ResponseFormatter::error(null, 'New Password cannot be same as your current password.');
+        }
+
+        try {
+            $validate = $request->validate([
+                'current-password' => 'required',
+                'new-password' => 'required_with:new-password-confirm|same:new-password-confirm|min:8',
+                'new-password-confirm' => 'min:8',
+            ]);
+
+            $user = Auth::user();
+            $user->password = Hash::make($request->get('new-password'));
+            $user->save();
+
+            return ResponseFormatter::success(null, 'Change password success');
+        } catch (Exception $e) {
+            return ResponseFormatter::error([
+                'message' => 'Something went wrong',
+                'error' => $e,
+            ], 'Change Password Failed', 500);
+        }
     }
 
     public function reset(Request $request)

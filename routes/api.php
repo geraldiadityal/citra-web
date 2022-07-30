@@ -45,6 +45,7 @@ Route::post('login', [UserController::class, 'login']);
 
 Route::post('forgot-password', [NewPasswordController::class, 'forgotPassword']);
 
+
 // Route::post('reset-password', [NewPasswordController::class, 'reset']);
 
 
@@ -56,6 +57,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('user/photo', [UserController::class, 'updatePhoto']);
     Route::post('logout', [UserController::class, 'logout']);
 
+    Route::post('change-password', [NewPasswordController::class, 'changePassword']);
 
     Route::get('transaction', [TransactionController::class, 'all']);
     Route::post('transaction/{id}', [TransactionController::class, 'update']);
