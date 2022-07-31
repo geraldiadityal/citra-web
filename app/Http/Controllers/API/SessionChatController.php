@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Helpers\ResponseFormatter;
 use App\Http\Controllers\Controller;
 use App\Models\SessionChats;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -21,7 +22,7 @@ class SessionChatController extends Controller
             if ($session) {
                 return ResponseFormatter::success($session, 'Data transaksi berhasil diambil');
             } else {
-                return ResponseFormatter::success(null, 'Data transaksi tidak ada', 404);
+                return ResponseFormatter::error(null, 'Data transaksi tidak ada', 404);
             }
         }
 
@@ -36,5 +37,29 @@ class SessionChatController extends Controller
 
 
         return ResponseFormatter::success($session, 'Data Sesi room chat berhasil diambil');
+    }
+
+    public function endChat(Request $request)
+    {
+        $status = "FINISH";
+        $id = $request->input('id');
+        if ($id) {
+            $session = SessionChats::with(['chats', 'messages', 'transaction'])->find($id);
+
+            $transaction = Transaction::where('session_chat_id', $id)->first();
+
+            if ($transaction) {
+                if ($session) {
+                    $transaction->status = $status;
+                    $transaction->save();
+                    $session->status = $status;
+                    $session->save();
+                    return ResponseFormatter::success($session, 'Status berhasil diganti');
+                } else {
+                    return ResponseFormatter::error(null, 'Data Session tidak ada', 404);
+                }
+            }
+            return ResponseFormatter::error(null, 'Status gagal diganti', 404);
+        }
     }
 }

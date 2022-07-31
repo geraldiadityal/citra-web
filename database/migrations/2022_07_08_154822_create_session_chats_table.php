@@ -17,7 +17,7 @@ class CreateSessionChatsTable extends Migration
             $table->increments('id');
             $table->unsignedBigInteger('user1_id');
             $table->unsignedBigInteger('user2_id');
-
+            $table->string('status', 6)->default('ACTIVE');
 
             $table->softDeletes();
             $table->timestamps();

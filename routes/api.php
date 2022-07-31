@@ -65,6 +65,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('checkout', [TransactionController::class, 'checkout']);
 
     Route::get('session', [SessionChatController::class, 'all']);
+    Route::post('session', [SessionChatController::class, 'endChat']);
 
     Route::post('clients', [CitraClientController::class, 'create']);
 
