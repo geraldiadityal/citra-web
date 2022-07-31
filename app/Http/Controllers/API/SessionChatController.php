@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Events\SessionChatEvent;
 use App\Helpers\ResponseFormatter;
 use App\Http\Controllers\Controller;
 use App\Models\SessionChats;
@@ -54,6 +55,9 @@ class SessionChatController extends Controller
                     $transaction->save();
                     $session->status = $status;
                     $session->save();
+                    broadcast(new SessionChatEvent($session->user1_id));
+                    broadcast(new SessionChatEvent($session->user2_id));
+
                     return ResponseFormatter::success($session, 'Status berhasil diganti');
                 } else {
                     return ResponseFormatter::error(null, 'Data Session tidak ada', 404);
