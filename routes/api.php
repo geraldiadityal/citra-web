@@ -66,6 +66,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('session', [SessionChatController::class, 'all']);
 
+    Route::post('clients', [CitraClientController::class, 'create']);
 
     //for chat pusher
     Route::post('send/{sessionChats}', [ChatsController::class, 'send']);

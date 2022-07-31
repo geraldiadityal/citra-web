@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Helpers\ResponseFormatter;
 use App\Http\Controllers\Controller;
 use App\Models\CitraClient;
+use Exception;
 use Illuminate\Http\Request;
 
 class CitraClientController extends Controller
@@ -37,5 +38,26 @@ class CitraClientController extends Controller
         }
 
         return ResponseFormatter::success($client->paginate($limit), 'Data client berhasil diambil');
+    }
+    public function create(Request $request)
+    {
+        try {
+            $request->validate(
+                [
+                    'users_id' => 'required|exists:users,id',
+                    'services_id' => 'required|exists:services,id',
+                    'description' => 'required'
+                ]
+            );
+
+            $client = CitraClient::create([
+                'users_id' => $request->users_id,
+                'services_id' => $request->services_id,
+                'description' => $request->description,
+            ]);
+            return ResponseFormatter::success($client, 'Citra Client berhasil dibuat');
+        } catch (Exception $e) {
+            return ResponseFormatter::error($e, 'Citra Client gagal dibuat');
+        }
     }
 }
