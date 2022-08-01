@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\MidtransController;
+use App\Http\Controllers\QuestionServiceController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CitraClientController;
 use App\Http\Controllers\CitraPartnerController;
@@ -41,6 +42,7 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
 
         Route::middleware(['admin'])->group(function () {
             Route::resource('service', CitraServiceController::class);
+            Route::resource('service.question', QuestionServiceController::class)->shallow();
             Route::resource('partner', CitraPartnerController::class);
             Route::resource('client', CitraClientController::class);
             Route::resource('transaction', TransactionController::class);
