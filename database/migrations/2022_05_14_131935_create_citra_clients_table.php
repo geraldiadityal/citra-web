@@ -14,7 +14,7 @@ class CreateCitraClientsTable extends Migration
     public function up()
     {
         Schema::create('citra_clients', function (Blueprint $table) {
-            $table->id();
+            $table->tinyIncrements('id');
 
             $table->bigInteger('users_id');
             $table->tinyInteger('services_id');
