@@ -17,7 +17,7 @@ class CreateCitraClientsTable extends Migration
             $table->tinyIncrements('id');
 
             $table->bigInteger('users_id');
-            $table->tinyInteger('services_id');
+            $table->unsignedTinyInteger('services_id');
             $table->string('description', 64);
 
             $table->softDeletes();
