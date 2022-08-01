@@ -15,10 +15,10 @@ class CreateCitraClientsTable extends Migration
     {
         Schema::create('citra_clients', function (Blueprint $table) {
             $table->id();
-            
+
             $table->bigInteger('users_id');
-            $table->bigInteger('services_id');
-            $table->string('description',64);
+            $table->tinyInteger('services_id');
+            $table->string('description', 64);
 
             $table->softDeletes();
             $table->timestamps();
