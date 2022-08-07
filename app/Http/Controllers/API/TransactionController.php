@@ -4,8 +4,10 @@ namespace App\Http\Controllers\API;
 
 use App\Helpers\ResponseFormatter;
 use App\Http\Controllers\Controller;
+use App\Models\CitraPartner;
 use App\Models\RoomChat;
 use App\Models\Transaction;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -57,13 +59,18 @@ class TransactionController extends Controller
 
     public function checkout(Request $request)
     {
-
         $request->validate([
             'partner_id' => 'required|exists:citra_partners,id',
             'user_id' => 'required|exists:users,id',
             'status' => 'required',
             'total' => 'required',
         ]);
+        $now = Carbon::now();
+        $partner = CitraPartner::find($request->partner_id);
+        if ($now->lessThan(Carbon::parse($partner->active_at))) {
+            return ResponseFormatter::error('Maaf, Partner sedang sibuk, Silahkan konsultasi dengan konsultan lain', 'Transaksi gagal');
+        }
+
 
 
         //create transaksi
@@ -85,6 +92,10 @@ class TransactionController extends Controller
         //Call transaksi yang dibuat
         $transaction = Transaction::with(['partner', 'user'])->find($transaction->id);
 
+        $now->addMinutes(15);
+        $partner->active_at = $now;
+
+
 
 
         //Create Transaksi Midtrans
@@ -101,13 +112,17 @@ class TransactionController extends Controller
             'vtweb' => [],
         ];
 
+
+
         //Call Midtrans
         try {
             //get halaman midtrans payment
             $paymentUrl = Snap::createTransaction($midtrans)->redirect_url;
+            $partner->active_at = $now;
 
             $transaction->payment_url = $paymentUrl;
             $transaction->save();
+            $partner->save();
             //Return Data ke API
             return ResponseFormatter::success($transaction, 'Transaksi berhasil');
         } catch (Exception $e) {

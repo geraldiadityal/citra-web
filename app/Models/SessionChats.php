@@ -13,6 +13,7 @@ class SessionChats extends Model
     protected $fillable = [
         'user1_id',
         'user2_id',
+        'expire_at'
     ];
 
     public function chats()
@@ -37,6 +38,10 @@ class SessionChats extends Model
     public function partner()
     {
         return $this->belongsTo(User::class, 'user2_id', 'id');
+    }
+    public function getExpireAtAttribute($value)
+    {
+        return Carbon::parse($value)->timestamp;
     }
     public function getCreatedAtAttribute($value)
     {

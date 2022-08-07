@@ -7,6 +7,7 @@ use App\Models\CitraPartner;
 use App\Models\RoomChat;
 use App\Models\SessionChats;
 use App\Models\Transaction;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Midtrans\Config;
 use Midtrans\Notification;
@@ -32,7 +33,9 @@ class MidtransController extends Controller
         //search transaksi by ID
         $transaction = Transaction::findOrFail($order_id);
         $partner = CitraPartner::findOrFail($transaction->partner_id);
-
+        $days = ($transaction->total) / ($partner->price);
+        $now = Carbon::now();
+        $now->addDays($days);
 
 
         // $room = RoomChat::findOrFail($transaction->room_id);
@@ -48,9 +51,11 @@ class MidtransController extends Controller
                     $session = SessionChats::create([
                         'user1_id' => $transaction->user_id,
                         'user2_id' => $partner->users_id,
+                        'expire_at' => $now,
                     ]);
-
                     $transaction->session_chat_id = $session->id;
+
+                    $partner->active_at = $now;
                 }
             }
         } else if ($status == 'settlement') {
@@ -59,9 +64,11 @@ class MidtransController extends Controller
             $session = SessionChats::create([
                 'user1_id' => $transaction->user_id,
                 'user2_id' => $partner->users_id,
+                'expire_at' => $now,
             ]);
 
             $transaction->session_chat_id = $session->id;
+            $partner->active_at = $now;
         } else if ($status == 'pending') {
             $transaction->status = 'PENDING';
         } else if ($status == 'deny') {
@@ -74,8 +81,7 @@ class MidtransController extends Controller
 
         //save transaksi
         $transaction->save();
-        // unused save status room
-        // $room->save();
+        $partner->save();
     }
 
     public function success()

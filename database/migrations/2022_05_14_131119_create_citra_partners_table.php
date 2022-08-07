@@ -20,6 +20,9 @@ class CreateCitraPartnersTable extends Migration
             $table->unsignedTinyInteger('services_id');
 
             $table->unsignedInteger('price');
+
+            $table->timestamp('active_at', $precision = 0)->nullable();
+
             $table->softDeletes();
             $table->timestamps();
         });

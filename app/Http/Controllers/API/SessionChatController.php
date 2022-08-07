@@ -5,8 +5,10 @@ namespace App\Http\Controllers\API;
 use App\Events\SessionChatEvent;
 use App\Helpers\ResponseFormatter;
 use App\Http\Controllers\Controller;
+use App\Models\CitraPartner;
 use App\Models\SessionChats;
 use App\Models\Transaction;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -51,10 +53,14 @@ class SessionChatController extends Controller
 
             if ($transaction) {
                 if ($session) {
+                    $partner = CitraPartner::find($transaction->partner_id);
+
                     $transaction->status = $status;
                     $transaction->save();
-                    $session->status = $status;
+                    $session->expire_at = Carbon::now();
                     $session->save();
+                    $partner->active_at = Carbon::now();
+
                     broadcast(new SessionChatEvent($session->user1_id));
                     broadcast(new SessionChatEvent($session->user2_id));
 
