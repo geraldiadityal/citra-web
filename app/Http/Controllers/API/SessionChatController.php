@@ -60,6 +60,7 @@ class SessionChatController extends Controller
                     $session->expire_at = Carbon::now();
                     $session->save();
                     $partner->active_at = Carbon::now();
+                    $partner->save();
 
                     broadcast(new SessionChatEvent($session->user1_id));
                     broadcast(new SessionChatEvent($session->user2_id));
