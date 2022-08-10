@@ -33,9 +33,9 @@ class MidtransController extends Controller
         //search transaksi by ID
         $transaction = Transaction::findOrFail($order_id);
         $partner = CitraPartner::findOrFail($transaction->partner_id);
-        $days = ($transaction->total) / ($partner->price);
+        $hours = ($transaction->total) / ($partner->price);
         $now = Carbon::now();
-        $now->addDays($days);
+        $now->addHours($hours);
 
 
         // $room = RoomChat::findOrFail($transaction->room_id);
